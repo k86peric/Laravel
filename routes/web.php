@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/alphabet-letters', 'App\Http\Controllers\AlphabetController@index');
+Route::post('/alphabet-letters', 'App\Http\Controllers\AlphabetController@processWord');
