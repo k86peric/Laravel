@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Alphabet Letters</title>
-</head>
-<body>
+@extends('app')
+
+@section('content')
     <!--@foreach (str_split($word) as $letter)
         <strong>{{ $letter }}</strong><br>-->
         @foreach ($alphabet as $alphabetLetter)
@@ -15,5 +12,4 @@
         @endforeach
         <br>
     <!--@endforeach-->
-</body>
-</html>
+@endsection
