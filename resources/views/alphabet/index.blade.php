@@ -12,7 +12,7 @@
     <form method="POST" action="/alphabet-letters">
         @csrf
         <label for="word">Enter a word:</label>
-        <input type="text" name="word" id="word" class="border">
+        <x-form.input placeholder="word"/>
         <input type="submit" value="Submit">
     </form>
 @endsection

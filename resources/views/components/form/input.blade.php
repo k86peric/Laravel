@@ -1,0 +1,1 @@
+<input type="text" name="word" id="word" class="border" placeholder="{{ $placeholder }}" {{ $attributes }}>
