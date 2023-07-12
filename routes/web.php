@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\MediaController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +19,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::view('/homepage', 'welcome', ['title' => 'Welcome Page'])
+    ->name('home')
+    ->withoutMiddleware('token');
+
+Route::get('/genre', GenreController::class);
+
+Route::resource('member', MemberController::class)
+    ->except(['store', 'edit'])
+    ->parameter('member', 'id');
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/alphabet-letters', 'App\Http\Controllers\AlphabetController@index');
-Route::post('/alphabet-letters', 'App\Http\Controllers\AlphabetController@processWord');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::apiResource('role', RoleController::class);
+
+require __DIR__.'/auth.php';

@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Policies\MediaPolicy;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +26,17 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::before(function(User $user){
+            if (Auth::user()->role->name === 'Administrator'){
+                return true;
+            }
+        });
+
+        Gate::define('list-media', function(User $user, bool $isAdmin = false){
+            return $isAdmin ? Response::allow() 
+            : Response::deny('You must be an admin!');
+        });
+
+        Gate::define('show-media', [MediaPolicy::class, 'show']);
     }
 }
