@@ -23,8 +23,6 @@ Route::view('/homepage', 'welcome', ['title' => 'Welcome Page'])
     ->name('home')
     ->withoutMiddleware('token');
 
-Route::get('/genre', GenreController::class);
-
 Route::resource('member', MemberController::class)
     ->except(['store', 'edit'])
     ->parameter('member', 'id');
