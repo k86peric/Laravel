@@ -41,6 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/alphabet-letters', 'App\Http\Controllers\AlphabetController@index');
+Route::post('/alphabet-letters', 'App\Http\Controllers\AlphabetController@processWord');
+
 Route::apiResource('role', RoleController::class);
+
+Route::apiResource('genre', GenreController::class);
 
 require __DIR__.'/auth.php';

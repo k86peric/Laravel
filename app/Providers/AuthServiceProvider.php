@@ -27,7 +27,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::before(function(User $user){
-            if (Auth::user()->role->name === 'Administrator'){
+            /** @var User $user */
+            $user = Auth::user();
+            if ($user->isAdmin()){
                 return true;
             }
         });
